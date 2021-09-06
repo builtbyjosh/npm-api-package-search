@@ -4,18 +4,33 @@ interface RepositoriesState {
   data: string[];
 }
 
-interface Action {
-  type: string;
-  payload?: any;
+interface SearchRepositoriesAction {
+  type: 'search_repositories'
 }
 
-const reducer = (state: RepositoriesState, action: Action): RepositoriesState => {
+interface SearchRepositoriesSuccessAction {
+  type: 'search_repositories_success';
+  payload: string[]
+}
+
+interface SearchRepositoriesErrorAction {
+  type: 'search_repositories_error';
+  payload: string;
+}
+
+const reducer = (
+  state: RepositoriesState, 
+  action: 
+    SearchRepositoriesAction | 
+    SearchRepositoriesSuccessAction | 
+    SearchRepositoriesErrorAction 
+  ): RepositoriesState => {
   switch (action.type) {
-    case 'search_respositories':
+    case 'search_repositories':
       return { loading: true, error: null, data: [] }
-    case 'search_respositories_success':
+    case 'search_repositories_success':
       return { loading: false, error: null, data: action.payload }
-    case 'search_respositories_error':
+    case 'search_repositories_error':
       return { loading: false, error: action.payload, data: [] }
     default:
       return state
